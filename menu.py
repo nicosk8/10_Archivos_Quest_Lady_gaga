@@ -2,6 +2,7 @@
 def show_menu():
     message =\
     """
+    0 - Cargar datos desde archivo de entrada .CSV
     1 - Normalizacion de datos
     2 - Mostrar lista de temas
     3 - Ordenar Temas

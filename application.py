@@ -16,7 +16,7 @@ def application(archivo_entrada):
     while running:
         show_menu()
         option = validate_input(0, 10)
-#        lista_registros_entrada = cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA)
+        print()
 
         match option:
             case 0:
@@ -32,14 +32,8 @@ def application(archivo_entrada):
                 print('-----------------------------------------------------------------------------------\n\n')
     
             case 1:
-                
-                diccionario_canciones = {} # ahora tengo que hacer a la inversa
-                                           # tengo que armar un diccionario de datos desde un .csv 
-                                           # y lo tengo que recibir acà
-                
-                lista_normalizada = fun.normalizar_datos(diccionario_canciones)
-#                
-
+                                
+                lista_normalizada = fun.normalizar_datos(lista_registros_entrada)            
                 fun.armar_encabezado('| Datos normalizados para procesar', videos= lista_normalizada)
                 fun.mostrar_videos_completos(lista_normalizada)
                 fun.armar_footer(f'Cantidad de reg. grabados: {len(lista_normalizada)}')
