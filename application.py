@@ -3,20 +3,28 @@ from menu import show_menu
 from validations import validate_input
 import os
 import functions as fun
+from archivos import (
+    abrir_escribir_texto
+)
 
-def application(songs: list[dict]):
+
+def application(archivo_entrada):
     
     running = True
     lista_normalizada = []
-
+ 
     while running:
         show_menu()
         option = validate_input(1, 10)
 
         match option:
             case 1:
+                diccionario_canciones = {} # ahora tengo que hacer a la inversa
+                                           # tengo que armar un diccionario de datos desde un .csv 
                 
-                lista_normalizada = fun.normalizar_datos(songs)
+                lista_normalizada = fun.normalizar_datos(diccionario_canciones)
+#                
+
                 fun.armar_encabezado('| Datos normalizados para procesar', videos= lista_normalizada)
                 fun.mostrar_videos_completos(lista_normalizada)
                 fun.armar_footer(f'Cantidad de reg. grabados: {len(lista_normalizada)}')
