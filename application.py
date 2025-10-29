@@ -4,7 +4,7 @@ from validations import validate_input
 import os
 import functions as fun
 from archivos import (
-    CSV_CANCIONES_LADYGAGA, cargar_datos_desde_archivo
+    CSV_CANCIONES_LADYGAGA, cargar_datos_a_diccionario_desde_archivo
 )
 
 
@@ -20,10 +20,17 @@ def application(archivo_entrada):
 
         match option:
             case 0:
-                lista_registros_entrada = cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA)
-                for reg in lista_registros_entrada: # imprimo la lista[str] que carguè
-                    print(reg)
-
+                lista_registros_entrada = cargar_datos_a_diccionario_desde_archivo(CSV_CANCIONES_LADYGAGA)
+                cantidad_impresos = 0
+                for diccionario in lista_registros_entrada:
+                    for clave, valor in diccionario.items():
+                        print(f'{clave} : {valor}')
+                    print()
+                    cantidad_impresos += 1
+                print('-----------------------------------------------------------------------------------')
+                print(f'Total impresos: {cantidad_impresos}')
+                print('-----------------------------------------------------------------------------------\n\n')
+    
             case 1:
                 
                 diccionario_canciones = {} # ahora tengo que hacer a la inversa

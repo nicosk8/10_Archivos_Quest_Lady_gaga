@@ -109,7 +109,7 @@ def leer_archivo_read_lines(nombre_archivo) -> list:
 
     return lista_contenido
 
-def cargar_datos_desde_archivo(nombre_archivo) -> list[str]:
+def cargar_datos_desde_archivo_lista(nombre_archivo) -> list[str]:
     """ 1 - Lee un archivo y carga su contenido por a una lista de strings
         2 - Valida archivo vacio: Si la lista que carga no està cargada es porque leyò archivo vacìo.
             2.a - Llama a una funcion que devuelve True si la lista està vacia o False si cargò datos.
@@ -122,7 +122,7 @@ def cargar_datos_desde_archivo(nombre_archivo) -> list[str]:
         :params:
             nombre_archivo -> ruta del archivo
         :returns:
-            contenido -> lista de strings
+            lista_contenidos -> lista de strings
      """
     
     contenido = list()
@@ -131,18 +131,87 @@ def cargar_datos_desde_archivo(nombre_archivo) -> list[str]:
     contenido = leer_archivo_read_lines(archivo)
     if not es_contenido_vacio(contenido, mensaje= 'Error en func -> leer_imprimir_archivo() -> El archivo està vacìo'):
     
-        encabezado = contenido.pop(0) # <- OJO ACA QUE ELIMINA EL PRIMER REG PORQUE VIENE CON ENCABEZADO
-        
+        lista_claves = contenido.pop(0).split(';') # <- OJO ACA QUE ELIMINA EL PRIMER REG PORQUE VIENE CON ENCABEZADO
+        lista_contenidos = contenido.split(';')
     else: 
         mensaje_error= 'Error en func -> cargar_datos_desde_archivo() -> El archivo " {nombre_archivo} " està Vacio'
         print(mensaje_error)
     
     archivo.close()
-    return contenido
-    # me falta crear un diccionario a partir de los datos que existen en el diccionario
-    # entonces la funcion devolverà una lista de dict.
+    return lista_contenidos
+
+def crear_diccionario(lista_claves: list, lista_contenido : list[str]) -> dict:
+    """ Arma un diccionario con claves y valores obtenidas por parametro y
+        devuelve una estructura de datos de tipo dict """
+    diccionario = {}
+    
+    for index_key in range(len(lista_claves)):
+        nombre_clave = lista_claves[index_key]
+        nombre_valor = lista_contenido[index_key]
+
+        diccionario[nombre_clave] = nombre_valor
+
+    return diccionario
+   
+def cargar_datos_a_diccionario_desde_archivo(nombre_archivo) -> list[dict]:
+    """ 1 - Lee un archivo y carga su contenido por a una lista de strings
+        2 - Valida archivo vacio: Si la lista que carga no està cargada es porque leyò archivo vacìo.
+            2.a - Llama a una funcion que devuelve True si la lista està vacia o False si cargò datos.
+                Si en la vaidacion el resultado es True -> Mostrara msj de error, no ejecutarà nada y tampoco rompe.
+                Si en la vaidacion el resultado es False -> imprimirà por consola lo que cargò desde la lectura.
+                
+        3 - separa el encabezado que contiene las claves si es que lo trae pero hay que ajustarlo a mano por el momento 
+            (LEER COMENTARIO EN VERDE)
+
+        4 - PROCESO PRINCIPAL : Por cada elemento en la lista de datos obtenidos desde la lectura del archivo, llama a una funcion que crea un diccionario
+            de datos, obtenidos por parametro -> lista de claves y el registro (valores) y anexa ese diccionario.  
+        5 - Cierra el archivo 
+        5 - Devuelve la lista de diccionarios
+        :params:
+            nombre_archivo -> ruta del archivo
+        :returns:
+            contenido -> lista de diccionarios
+     """
+    
+    contenido = []
+    diccionario = {}
+    lista_diccionarios = []
+    archivo = abrir_archivo(nombre_archivo, modo='r')
+
+    contenido = leer_archivo_read_lines(archivo)
+    if not es_contenido_vacio(contenido, mensaje= 'Error en func -> leer_imprimir_archivo() -> El archivo està vacìo'):
+    
+        lista_claves = contenido.pop(0) # <- OJO ACA QUE ELIMINA EL PRIMER REG PORQUE VIENE CON ENCABEZADO
+        nombres_claves = lista_claves.split(';') # separo los campos
+        for reg in contenido:
+      
+            valores_registro = reg.split(';') # separo los campos
+            diccionario = crear_diccionario(lista_claves= nombres_claves, lista_contenido= valores_registro)
+            
+            lista_diccionarios.append(diccionario)   
+    else: 
+        mensaje_error= 'Error en func -> cargar_datos_desde_archivo() -> El archivo " {nombre_archivo} " està Vacio'
+        print(mensaje_error)
+    
+    archivo.close()
+    return lista_diccionarios
+    
 
 
+# TESTING -------------------------------------------------------------------------------------| 
 if __name__ == '__main__':
 #    cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA_VACIO)
-    cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA)
+#    cargar_datos_desde_archivo_lista(CSV_CANCIONES_LADYGAGA)
+
+    lista_diccionarios = cargar_datos_a_diccionario_desde_archivo(CSV_CANCIONES_LADYGAGA)
+    cantidad_impresos = 0
+    for diccionario in lista_diccionarios:
+        for clave, valor in diccionario.items():
+            print(f'{clave} : {valor}')
+        print()
+        cantidad_impresos += 1
+    print('-----------------------------------------------------------------------------------')
+    print(f'Total impresos: {cantidad_impresos}')
+    print('-----------------------------------------------------------------------------------\n\n')
+    
+
