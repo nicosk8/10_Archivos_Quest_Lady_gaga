@@ -1,4 +1,4 @@
-from lady_gaga import playlist_lady_gaga
+#from lady_gaga import playlist_lady_gaga
 
 # Quest Lady Gaga  - funcionciones basicas  ---------------
 def abrir_escribir_texto(ruta: str, contenido: str, anexar: bool = False) -> int:
