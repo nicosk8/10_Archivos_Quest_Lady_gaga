@@ -2,7 +2,7 @@
 
 # Seccion : nombres y rutas de archivos: 
 CSV_CANCIONES_LADYGAGA = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones.csv'
-CSV_CANCIONES_LADYGAGA_vacio = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones_vacio.csv'
+CSV_CANCIONES_LADYGAGA_VACIO = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones_vacio.csv'
 
 # Quest Lady Gaga  - Seccion : funcionciones basicas  ---------------
 
@@ -36,12 +36,16 @@ def es_contenido_vacio(contenido: list, mensaje: str) -> bool:
     return contenido_vacio
         
 
-# Quest Lady Gaga  - Seccion : Apertura de archivos  ---------------
+# Quest Lady Gaga  - Seccion : Apertura y cierre de archivos  ---------------
 
 def abrir_archivo(ruta: str, modo = 'r') -> int:
     """ Abre un archivo que ya existe """
     archivo = open(ruta, mode= modo , encoding='UTF-8')
     return archivo
+
+def cerrar_archivo(archivo):
+    """ Cierra un archivo que ya existe """
+    return archivo.close() 
 
 def abrir_escribir_texto(ruta: str, contenido: str, anexar: bool = False) -> int:
     """ Abre un archivo (si no existe, lo crea), lo graba y lo cierra """
@@ -105,14 +109,20 @@ def leer_archivo_read_lines(nombre_archivo) -> list:
 
     return lista_contenido
 
-def leer_imprimir_archivo(nombre_archivo):
-    """ 1 - Lee un archivo e imprime su contenido por consola 
+def cargar_datos_desde_archivo(nombre_archivo) -> list[str]:
+    """ 1 - Lee un archivo y carga su contenido por a una lista de strings
         2 - Valida archivo vacio: Si la lista que carga no està cargada es porque leyò archivo vacìo.
             2.a - Llama a una funcion que devuelve True si la lista està vacia o False si cargò datos.
                 Si en la vaidacion el resultado es True -> Mostrara msj de error, no ejecutarà nada y tampoco rompe.
                 Si en la vaidacion el resultado es False -> imprimirà por consola lo que cargò desde la lectura.
                 
-        3 - Tambien elimina el encabezado si es que lo trae pero hay que ajustarlo a mano por el momento (LEER COMENTARIO EN VERDE)
+        3 - Elimina el encabezado si es que lo trae pero hay que ajustarlo a mano por el momento (LEER COMENTARIO EN VERDE)
+        4 - Cierra el archivo 
+        5 - Devuelve la lista
+        :params:
+            nombre_archivo -> ruta del archivo
+        :returns:
+            contenido -> lista de strings
      """
     
     contenido = list()
@@ -122,11 +132,17 @@ def leer_imprimir_archivo(nombre_archivo):
     if not es_contenido_vacio(contenido, mensaje= 'Error en func -> leer_imprimir_archivo() -> El archivo està vacìo'):
     
         encabezado = contenido.pop(0) # <- OJO ACA QUE ELIMINA EL PRIMER REG PORQUE VIENE CON ENCABEZADO
-
-        for reg in contenido:
-            print(reg)
+        
+    else: 
+        mensaje_error= 'Error en func -> cargar_datos_desde_archivo() -> El archivo " {nombre_archivo} " està Vacio'
+        print(mensaje_error)
+    
+    archivo.close()
+    return contenido
+    # me falta crear un diccionario a partir de los datos que existen en el diccionario
+    # entonces la funcion devolverà una lista de dict.
 
 
 if __name__ == '__main__':
-#    leer_imprimir_archivo(CSV_CANCIONES_LADYGAGA_vacio)
-    leer_imprimir_archivo(CSV_CANCIONES_LADYGAGA)
+#    cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA_VACIO)
+    cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA)

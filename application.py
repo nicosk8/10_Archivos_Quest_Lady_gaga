@@ -4,7 +4,7 @@ from validations import validate_input
 import os
 import functions as fun
 from archivos import (
-    abrir_escribir_texto
+    CSV_CANCIONES_LADYGAGA, cargar_datos_desde_archivo
 )
 
 
@@ -15,12 +15,20 @@ def application(archivo_entrada):
  
     while running:
         show_menu()
-        option = validate_input(1, 10)
+        option = validate_input(0, 10)
+#        lista_registros_entrada = cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA)
 
         match option:
+            case 0:
+                lista_registros_entrada = cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA)
+                for reg in lista_registros_entrada: # imprimo la lista[str] que carguè
+                    print(reg)
+
             case 1:
+                
                 diccionario_canciones = {} # ahora tengo que hacer a la inversa
                                            # tengo que armar un diccionario de datos desde un .csv 
+                                           # y lo tengo que recibir acà
                 
                 lista_normalizada = fun.normalizar_datos(diccionario_canciones)
 #                
