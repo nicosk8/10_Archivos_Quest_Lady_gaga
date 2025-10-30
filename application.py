@@ -1,10 +1,11 @@
 import copy 
+import datetime
 from menu import show_menu
 from validations import validate_input
 import os
 import functions as fun
 from archivos import (
-    CSV_CANCIONES_LADYGAGA, cargar_datos_a_diccionario_desde_archivo
+    CSV_CANCIONES_LADYGAGA, cargar_datos_a_diccionario_desde_archivo,JSON_FILE_CANCIONES_LADY_GAGA, abrir_grabar_archivo_json
 )
 
 
@@ -37,6 +38,15 @@ def application(archivo_entrada):
                 fun.armar_encabezado('| Datos normalizados para procesar', videos= lista_normalizada)
                 fun.mostrar_videos_completos(lista_normalizada)
                 fun.armar_footer(f'Cantidad de reg. grabados: {len(lista_normalizada)}')
+
+                # aca tendria que guardar los datos de lista_normalizada en un archivo JSON
+                # crear JSON, abrirlo en modo w y a (append), grabarlo, cerrarlo.
+                
+                for cancion in lista_normalizada: # <- formateo la fecha a str
+                    cancion['Fecha lanzamiento'] = diccionario['Fecha lanzamiento'].strftime("%Y-%m-%d")
+
+                abrir_grabar_archivo_json(JSON_FILE_CANCIONES_LADY_GAGA, modo = 'w', contenido= lista_normalizada, clave='canciones')
+                
 
             case 2:
 

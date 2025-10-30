@@ -1,8 +1,12 @@
-#from lady_gaga import playlist_lady_gaga
+import json
+
 
 # Seccion : nombres y rutas de archivos: 
 CSV_CANCIONES_LADYGAGA = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones.csv'
 CSV_CANCIONES_LADYGAGA_VACIO = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones_vacio.csv'
+JSON_FILE = '../10_Archivos_Quest_Lady_gaga/heroes.json' # testing
+JSON_FILE_CANCIONES_LADY_GAGA = '../10_Archivos_Quest_Lady_gaga/canciones.json'
+
 
 # Quest Lady Gaga  - Seccion : funcionciones basicas  ---------------
 
@@ -196,22 +200,40 @@ def cargar_datos_a_diccionario_desde_archivo(nombre_archivo) -> list[dict]:
     archivo.close()
     return lista_diccionarios
     
+# Quest Lady Gaga  - Seccion : JSON file  -------------------
+
+
+def abrir_grabar_archivo_json(nombre_archivo: str, modo: str, contenido: list[dict], clave: str, anexo: bool = False):
+    modo = 'w'
+    if anexo == True:
+        modo = 'a'
+
+    with open(nombre_archivo, modo, encoding='UTF-8') as file:
+
+        diccionario = {}
+        diccionario[clave] = contenido # <- creo una clave para almacenar una lista de datos y la agrego en el paso siguiente.
+        json.dump(diccionario, file, indent=4) # <- le paso que quiero guradar (datos) y donde (file) | indent=4 <- acomoda verticalmente la informacion
+
+
+
+
 
 
 # TESTING -------------------------------------------------------------------------------------| 
-if __name__ == '__main__':
+#if __name__ == '__main__':
+   
+
+    
 #    cargar_datos_desde_archivo(CSV_CANCIONES_LADYGAGA_VACIO)
 #    cargar_datos_desde_archivo_lista(CSV_CANCIONES_LADYGAGA)
 
-    lista_diccionarios = cargar_datos_a_diccionario_desde_archivo(CSV_CANCIONES_LADYGAGA)
-    cantidad_impresos = 0
-    for diccionario in lista_diccionarios:
-        for clave, valor in diccionario.items():
-            print(f'{clave} : {valor}')
-        print()
-        cantidad_impresos += 1
-    print('-----------------------------------------------------------------------------------')
-    print(f'Total impresos: {cantidad_impresos}')
-    print('-----------------------------------------------------------------------------------\n\n')
-    
-
+#    lista_diccionarios = cargar_datos_a_diccionario_desde_archivo(CSV_CANCIONES_LADYGAGA)
+#    cantidad_impresos = 0
+#    for diccionario in lista_diccionarios:
+#        for clave, valor in diccionario.items():
+#            print(f'{clave} : {valor}')
+#        print()
+#        cantidad_impresos += 1
+#    print('-----------------------------------------------------------------------------------')
+#    print(f'Total impresos: {cantidad_impresos}')
+#    print('-----------------------------------------------------------------------------------\n\n')
