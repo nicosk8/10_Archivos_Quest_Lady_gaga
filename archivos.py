@@ -4,6 +4,7 @@ import json
 # Seccion : nombres y rutas de archivos: 
 CSV_CANCIONES_LADYGAGA = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones.csv'
 CSV_CANCIONES_LADYGAGA_VACIO = 'C:/Repositorio UTN/2025/PROG I/Practica_Conceptos/10_Archivos_Quest_Lady_gaga/canciones_vacio.csv'
+CSV_COLABS = '../10_Archivos_Quest_Lady_gaga/colaboradores.csv'
 JSON_FILE = '../10_Archivos_Quest_Lady_gaga/heroes.json' # testing
 JSON_FILE_CANCIONES_LADY_GAGA = '../10_Archivos_Quest_Lady_gaga/canciones.json'
 
@@ -201,7 +202,6 @@ def cargar_datos_a_diccionario_desde_archivo(nombre_archivo) -> list[dict]:
     return lista_diccionarios
     
 # Quest Lady Gaga  - Seccion : JSON file  -------------------
-
 
 def abrir_grabar_archivo_json(nombre_archivo: str, modo: str, contenido: list[dict], clave: str, anexo: bool = False):
     modo = 'w'

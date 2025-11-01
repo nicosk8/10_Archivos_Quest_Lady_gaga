@@ -5,7 +5,9 @@ from validations import validate_input
 import os
 import functions as fun
 from archivos import (
-    CSV_CANCIONES_LADYGAGA, cargar_datos_a_diccionario_desde_archivo,JSON_FILE_CANCIONES_LADY_GAGA, abrir_grabar_archivo_json
+    CSV_CANCIONES_LADYGAGA, JSON_FILE_CANCIONES_LADY_GAGA, CSV_COLABS,
+    cargar_datos_a_diccionario_desde_archivo,
+    abrir_grabar_archivo_json
 )
 
 
@@ -65,7 +67,10 @@ def application(archivo_entrada):
             case 7:
                 fun.mostrar_coincidencias(lista_normalizada)
             case 8:
-                fun.mostrar_videos_con_colab(lista_normalizada)
+                #fun.mostrar_videos_con_colab(lista_normalizada)
+                fun.grabar_archivo_salida_colaboradores(ruta_archivo=CSV_COLABS, lista_normalizada= lista_normalizada)
+                
+                
             case 9:
                 fun.filtrar_videos_por_mes(lista_normalizada)
             case 10:

@@ -1,5 +1,5 @@
 import datetime
-
+from archivos import abrir_escribir_texto
 # Quest Lady gaga - Normalizar datos ---------------------------------------------------------
 
 def normalizar_nombre_colaborador(video: dict) -> str:
@@ -335,7 +335,33 @@ def mostrar_videos_con_colab(videos: list[dict]):
     armar_encabezado('Colaboradores hallados : ', videos= coincidencias)
     mostrar_videos_completos(coincidencias)
     armar_footer(f'\nCantidad de reg grabados: {len(coincidencias)}')
-  
+    return coincidencias
+
+def grabar_archivo_salida_colaboradores(ruta_archivo: str, lista_normalizada: list[dict]):
+    set_colaboradores = set()
+    for cancion in lista_normalizada:
+        
+        lista_colaboradores = []
+        auxiliar = cancion.get('Colaboradores').replace('|', ',')
+        lista_colaboradores.append(auxiliar)
+
+        for colaborador in lista_colaboradores:
+            lista_aux_colaboradores = list()
+            lista_aux_colaboradores = colaborador.split(',')
+        
+        for i in range(len(lista_aux_colaboradores)):
+            set_colaboradores.add(lista_aux_colaboradores[i]) 
+
+    for colaborador in set_colaboradores:
+
+        abrir_escribir_texto(ruta=ruta_archivo, contenido=colaborador, anexar=True)
+        print(colaborador)
+
+    print('----------------------------------------------------------')
+    print(f'Total colaboradores grabados: {len(set_colaboradores)}')
+    print('----------------------------------------------------------')                    
+                        
+
 # Quest Lady gaga - Filtrar datos  por mes  ----------------------------------------------------
 
 def mapear_mes(mes: str) -> int:
